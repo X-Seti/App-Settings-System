@@ -1,4 +1,5 @@
 # App Settings System - Feb 2025 - X-Seti
+# updated - Oct 25 - Added the complete color set to QT6
 
 A reusable theming and settings system for PyQt6 applications.
 
