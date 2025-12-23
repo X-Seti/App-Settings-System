@@ -97,9 +97,6 @@ class MainGUI(QWidget): #vers 3
             parent_pos = parent.pos()
             self.move(parent_pos.x() + 50, parent_pos.y() + 80)
 
-        #if self.standalone_mode:
-        #    self._ensure_depends_structure()
-
         # Setup UI FIRST
         self.setup_ui()
 
@@ -136,24 +133,22 @@ class MainGUI(QWidget): #vers 3
         self.txd_tabs.setTabsClosable(True)
         #self.txd_tabs.tabCloseRequested.connect(self._close_txd_tab)
 
-
         # Create initial tab with main content
         initial_tab = QWidget()
         tab_layout = QVBoxLayout(initial_tab)
         tab_layout.setContentsMargins(0, 0, 0, 0)
 
-
         # Main splitter
         main_splitter = QSplitter(Qt.Orientation.Horizontal)
 
         # Create all panels first
-        left_panel = self._create_left_panel()
+        left_panel = self._create_left_panel() # uncomment below for exist panel.
         middle_panel = self._create_middle_panel()
         right_panel = self._create_right_panel()
 
         # Add panels to splitter based on mode
         if left_panel is not None:  # IMG Factory mode
-            main_splitter.addWidget(left_panel)
+           # main_splitter.addWidget(left_panel)
             main_splitter.addWidget(middle_panel)
             main_splitter.addWidget(right_panel)
             # Set proportions (2:3:5)
@@ -210,16 +205,12 @@ class MainGUI(QWidget): #vers 3
             tex_count = len(self.texture_list)
             #self.status_txd_info.setText(f"Textures: {tex_count} | TXD: {size_kb:.1f} KB")
 
-
         return status_bar
 
 
     def _show_workshop_settings(self): #vers 1
         """Show complete workshop settings dialog"""
-        from PyQt6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QPushButton,
-                                    QTabWidget, QWidget, QGroupBox, QFormLayout,
-                                    QSpinBox, QComboBox, QSlider, QLabel, QCheckBox,
-                                    QFontComboBox)
+        from PyQt6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTabWidget, QWidget, QGroupBox, QFormLayout, QSpinBox, QComboBox, QSlider, QLabel, QCheckBox, QFontComboBox)
         from PyQt6.QtCore import Qt
         from PyQt6.QtGui import QFont
 
@@ -239,7 +230,7 @@ class MainGUI(QWidget): #vers 3
         fonts_layout = QVBoxLayout(fonts_tab)
 
         # Default Font
-        default_font_group = QGroupBox("📝 Default Font")
+        default_font_group = QGroupBox("Default Font")
         default_font_layout = QHBoxLayout()
 
         default_font_combo = QFontComboBox()
@@ -1230,7 +1221,7 @@ class MainGUI(QWidget): #vers 3
         self.export_btn.setEnabled(False)
         layout.addWidget(self.export_btn)
 
-        self.export_all_btn = QPushButton("Export All")
+        self.export_all_btn = QPushButton("Button")
         self.export_all_btn.setFont(self.button_font)
         self.export_all_btn.setIcon(self._create_package_icon())
         self.export_all_btn.setIconSize(QSize(20, 20))
@@ -1241,7 +1232,7 @@ class MainGUI(QWidget): #vers 3
         layout.addSpacing(10)
 
         # Switch button
-        self.switch_btn = QPushButton("Options")
+        self.switch_btn = QPushButton("Button 2")
         self.switch_btn.setFont(self.button_font)
         self.switch_btn.setIcon(self._create_flip_vert_icon())
         self.switch_btn.setIconSize(QSize(20, 20))
@@ -1363,10 +1354,11 @@ class MainGUI(QWidget): #vers 3
         self.flip_vert_btn = QPushButton()
         self.flip_vert_btn.setFont(self.button_font)
         self.flip_vert_btn.setIcon(self._create_flip_vert_icon())
-        self.flip_vert_btn.setText("Flip Vertical")
+        self.flip_vert_btn.setText("Example Flip V")
         self.flip_vert_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.flip_vert_btn.setFixedSize(40, 40)
+
         #self.flip_vert_btn.clicked.connect(self._flip_vertical)
         self.flip_vert_btn.setEnabled(False)
         self.flip_vert_btn.setToolTip("Flip texture vertically")
@@ -1376,9 +1368,10 @@ class MainGUI(QWidget): #vers 3
         self.flip_horz_btn = QPushButton()
         self.flip_horz_btn.setFont(self.button_font)
         self.flip_horz_btn.setIcon(self._create_flip_horz_icon())
-        self.flip_horz_btn.setText("Flip Horizontal")
+        self.flip_horz_btn.setText("Example Flip H")
         self.flip_horz_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
+
             self.flip_horz_btn.setFixedSize(40, 40)
         #self.flip_horz_btn.clicked.connect(self._flip_horizontal)
         self.flip_horz_btn.setEnabled(False)
@@ -1391,10 +1384,11 @@ class MainGUI(QWidget): #vers 3
         self.rotate_cw_btn = QPushButton()
         self.rotate_cw_btn.setFont(self.button_font)
         self.rotate_cw_btn.setIcon(self._create_rotate_cw_icon())
-        self.rotate_cw_btn.setText("Rotate 90° CW")
+        self.rotate_cw_btn.setText("Example R90° CW")
         self.rotate_cw_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.rotate_cw_btn.setFixedSize(40, 40)
+
         #self.rotate_cw_btn.clicked.connect(self._rotate_clockwise)
         self.rotate_cw_btn.setEnabled(False)
         self.rotate_cw_btn.setToolTip("Rotate 90 degrees clockwise")
@@ -1404,10 +1398,11 @@ class MainGUI(QWidget): #vers 3
         self.rotate_ccw_btn = QPushButton()
         self.rotate_ccw_btn.setFont(self.button_font)
         self.rotate_ccw_btn.setIcon(self._create_rotate_ccw_icon())
-        self.rotate_ccw_btn.setText("Rotate 90° CCW")
+        self.rotate_ccw_btn.setText("Example R90° CCW")
         self.rotate_ccw_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.rotate_ccw_btn.setFixedSize(40, 40)
+
         #self.rotate_ccw_btn.clicked.connect(self._rotate_counterclockwise)
         self.rotate_ccw_btn.setEnabled(False)
         self.rotate_ccw_btn.setToolTip("Rotate 90 degrees counter-clockwise")
@@ -1423,6 +1418,7 @@ class MainGUI(QWidget): #vers 3
         self.copy_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.copy_btn.setFixedSize(40, 40)
+
         #self.copy_btn.clicked.connect(self._copy_texture)
         self.copy_btn.setEnabled(False)
         self.copy_btn.setToolTip("Copy texture to clipboard")
@@ -1436,6 +1432,7 @@ class MainGUI(QWidget): #vers 3
         self.paste_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.paste_btn.setFixedSize(40, 40)
+
         #self.paste_btn.clicked.connect(self._paste_texture)
         self.paste_btn.setEnabled(False)
         self.paste_btn.setToolTip("Paste texture from clipboard")
@@ -1448,35 +1445,13 @@ class MainGUI(QWidget): #vers 3
         self.paint_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.paint_btn.setFixedSize(40, 40)
+
         #self.paint_btn.clicked.connect(self._open_paint_editor)
         self.paint_btn.setEnabled(False)
         self.paint_btn.setToolTip("Paint on texture")
         layout.addWidget(self.paint_btn)
 
         layout.addSpacing(5)
-
-        # Check TXD vs DFF
-        self.check_dff_btn = QPushButton()
-        self.check_dff_btn.setFont(self.button_font)
-        self.check_dff_btn.setIcon(self._create_check_icon())
-        self.check_dff_btn.setText("Check DFF")
-        self.check_dff_btn.setIconSize(QSize(20, 20))
-        if self.button_display_mode == 'icons':
-            self.check_dff_btn.setFixedSize(40, 40)
-        #self.check_dff_btn.clicked.connect(self._check_txd_vs_dff)
-        self.check_dff_btn.setToolTip("Verify textures against DFF model file")
-        layout.addWidget(self.check_dff_btn)
-
-        self.build_from_dff_btn = QPushButton()
-        self.build_from_dff_btn.setFont(self.button_font)
-        self.build_from_dff_btn.setIcon(self._create_build_icon())
-        self.build_from_dff_btn.setText("Build TXD via")
-        self.build_from_dff_btn.setIconSize(QSize(20, 20))
-        if self.button_display_mode == 'icons':
-            self.build_from_dff_btn.setFixedSize(40, 40)
-        #self.build_from_dff_btn.clicked.connect(self._build_txd_from_dff)
-        self.build_from_dff_btn.setToolTip("Create TXD structure from DFF material names")
-        layout.addWidget(self.build_from_dff_btn)
 
         # Create Texture
         self.create_texture_btn = QPushButton()
@@ -1486,6 +1461,7 @@ class MainGUI(QWidget): #vers 3
         self.create_texture_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.create_texture_btn.setFixedSize(40, 40)
+
         #self.create_texture_btn.clicked.connect(self._create_new_texture_entry)
         self.create_texture_btn.setToolTip("Create new blank texture")
         layout.addWidget(self.create_texture_btn)
@@ -1498,6 +1474,7 @@ class MainGUI(QWidget): #vers 3
         self.delete_texture_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.delete_texture_btn.setFixedSize(40, 40)
+
         #self.delete_texture_btn.clicked.connect(self._delete_texture)
         self.delete_texture_btn.setEnabled(False)
         self.delete_texture_btn.setToolTip("Remove selected texture")
@@ -1511,6 +1488,7 @@ class MainGUI(QWidget): #vers 3
         self.duplicate_texture_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.duplicate_texture_btn.setFixedSize(40, 40)
+
         #self.duplicate_texture_btn.clicked.connect(self._duplicate_texture)
         self.duplicate_texture_btn.setEnabled(False)
         self.duplicate_texture_btn.setToolTip("Clone selected texture")
@@ -1526,6 +1504,7 @@ class MainGUI(QWidget): #vers 3
         self.filters_btn.setIconSize(QSize(20, 20))
         if self.button_display_mode == 'icons':
             self.filters_btn.setFixedSize(40, 40)
+
         #self.filters_btn.clicked.connect(self._open_filters_dialog)
         self.filters_btn.setEnabled(False)
         self.filters_btn.setToolTip("Brightness, Contrast, Saturation")
@@ -1562,7 +1541,7 @@ class MainGUI(QWidget): #vers 3
         """Create middle panel with controls"""
         from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QGroupBox, QLabel
 
-        panel = QGroupBox("Controls")
+        panel = QGroupBox("Panel Two")
         # Match your styling
         panel.setStyleSheet("""
             QGroupBox {
@@ -1639,23 +1618,6 @@ class MainGUI(QWidget): #vers 3
         self.info_name.mousePressEvent = lambda e: self._enable_name_edit(e, False)
         name_layout.addWidget(self.info_name, stretch=1)
 
-        self.alpha_label = QLabel("Alpha:")
-        self.alpha_label.setFont(self.panel_font)
-        self.alpha_label.setStyleSheet("color: red;")
-        self.alpha_label.setVisible(False)
-        name_layout.addWidget(self.alpha_label)
-
-        self.info_alpha_name = QLineEdit()
-        self.info_alpha_name.setFont(self.panel_font)
-        self.info_alpha_name.setPlaceholderText("Click to edit...")
-        self.info_alpha_name.setReadOnly(True)
-        self.info_alpha_name.setStyleSheet("color: red; padding: 5px; border: 1px solid #3a3a3a;")
-        #self.info_alpha_name.returnPressed.connect(self._save_alpha_name)
-        #self.info_alpha_name.editingFinished.connect(self._save_alpha_name)
-        self.info_alpha_name.mousePressEvent = lambda e: self._enable_name_edit(e, True)
-        self.info_alpha_name.setVisible(False)
-        name_layout.addWidget(self.info_alpha_name, stretch=1)
-
         info_layout.addLayout(name_layout)
 
         # === LINES 2 & 3: Adaptive based on display mode ===
@@ -1668,19 +1630,6 @@ class MainGUI(QWidget): #vers 3
             # Line 2: Format controls
             format_layout = QHBoxLayout()
             format_layout.setSpacing(5)
-
-            self.format_combo = QComboBox()
-            self.format_combo.setFont(self.panel_font)
-            self.format_combo.addItems(["DXT1", "DXT3", "DXT5", "ARGB8888", "ARGB1555", "ARGB4444", "RGB888", "RGB565"])
-            #self.format_combo.currentTextChanged.connect(self._change_format)
-            self.format_combo.setEnabled(False)
-            self.format_combo.setMaximumWidth(100)
-            format_layout.addWidget(self.format_combo)
-
-
-            self.info_bitdepth = QLabel("[32bit]")
-            self.info_bitdepth.setMinimumWidth(50)
-            format_layout.addWidget(self.info_bitdepth)
 
             format_layout.addStretch()
 
@@ -1698,7 +1647,7 @@ class MainGUI(QWidget): #vers 3
             mipbump_layout = QHBoxLayout()
             mipbump_layout.setSpacing(5)
 
-            self.info_format = QLabel("Mipmaps: ")
+            self.info_format = QLabel("Example: ")
             self.info_format.setFont(self.panel_font)
             self.info_format.setMinimumWidth(100)
             mipbump_layout.addWidget(self.info_format)
@@ -1733,7 +1682,7 @@ class MainGUI(QWidget): #vers 3
             mipbump_layout.addSpacing(30)
 
             # Bumpmap detection
-            self.info_format_b = QLabel("Bumpmaps:")
+            self.info_format_b = QLabel("Example:")
             self.info_format_b.setFont(self.panel_font)
             self.info_format_b.setMinimumWidth(120)
             mipbump_layout.addWidget(self.info_format_b)
@@ -1744,7 +1693,7 @@ class MainGUI(QWidget): #vers 3
             self.view_bumpmap_btn.setFont(self.button_font)
             self.view_bumpmap_btn.setIcon(self._create_manage_icon())
             self.view_bumpmap_btn.setIconSize(QSize(20, 20))
-            self.view_bumpmap_btn.setToolTip("View and Manage Bumpmaps")
+            self.view_bumpmap_btn.setToolTip("View and Manage")
             #self.view_bumpmap_btn.clicked.connect(self._view_bumpmap)
             self.view_bumpmap_btn.setEnabled(False)
             mipbump_layout.addWidget(self.view_bumpmap_btn)
@@ -1753,7 +1702,7 @@ class MainGUI(QWidget): #vers 3
             self.export_bumpmap_btn.setFont(self.button_font)
             self.export_bumpmap_btn.setIcon(self._create_export_icon())
             self.export_bumpmap_btn.setIconSize(QSize(20, 20))
-            self.export_bumpmap_btn.setToolTip("Export bumpmap as PNG")
+            self.export_bumpmap_btn.setToolTip("Export as PNG")
             #self.export_bumpmap_btn.clicked.connect(self._export_bumpmap)
             self.export_bumpmap_btn.setEnabled(False)
             mipbump_layout.addWidget(self.export_bumpmap_btn)
@@ -1762,7 +1711,7 @@ class MainGUI(QWidget): #vers 3
             self.import_bumpmap_btn.setFont(self.button_font)
             self.import_bumpmap_btn.setIcon(self._create_import_icon())
             self.import_bumpmap_btn.setIconSize(QSize(20, 20))
-            self.import_bumpmap_btn.setToolTip("Import bumpmap from image")
+            self.import_bumpmap_btn.setToolTip("Import from image")
             #self.import_bumpmap_btn.clicked.connect(self._import_bumpmap)
             self.import_bumpmap_btn.setEnabled(False)
             mipbump_layout.addWidget(self.import_bumpmap_btn)
@@ -1811,6 +1760,7 @@ class MainGUI(QWidget): #vers 3
         return panel
 
 
+    # Far RIGHT icons - TODO - Changed depending on usage.
     def _create_preview_controls(self): #vers 2
         """Create preview control buttons - vertical layout on right"""
         controls_frame = QFrame()
@@ -1953,42 +1903,6 @@ class MainGUI(QWidget): #vers 3
         return controls_frame
 
 
-
-    def _create_level_card(self, level_data): #vers 2
-        """Create modern level card matching mockup"""
-        card = QFrame()
-        card.setFrameStyle(QFrame.Shape.StyledPanel)
-        card.setStyleSheet("""
-            QFrame {
-                background: #1e1e1e;
-                border: 1px solid #3a3a3a;
-                border-radius: 5px;
-            }
-            QFrame:hover {
-                border-color: #4a6fa5;
-                background: #252525;
-            }
-        """)
-        card.setMinimumHeight(140)
-
-        layout = QHBoxLayout(card)
-        layout.setContentsMargins(15, 15, 15, 15)
-        layout.setSpacing(15)
-
-        # Preview thumbnail
-        preview_widget = self._create_preview_widget(level_data)
-        layout.addWidget(preview_widget)
-
-        # Level info section
-        info_section = self._create_info_section(level_data)
-        layout.addWidget(info_section, stretch=1)
-
-        # Action buttons
-        action_section = self._create_action_section(level_data)
-        layout.addWidget(action_section)
-
-        return card
-
     def _create_preview_widget(self, level_data=None): #vers 2
         """Create preview widget - blank square if no level_data"""
         if level_data is None:
@@ -2042,198 +1956,6 @@ class MainGUI(QWidget): #vers 3
             preview.setText("🖼️")
 
         return preview
-
-
-    def _create_info_section(self, level_data): #vers 1
-        """Create info section with stats grid"""
-        info_widget = QWidget()
-        layout = QVBoxLayout(info_widget)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(10)
-
-        # Header with level number and dimensions
-        header_layout = QHBoxLayout()
-
-        level_num = level_data.get('level', 0)
-        level_badge = QLabel(f"Level {level_num}")
-        level_badge.setStyleSheet("""
-            QLabel {
-                background: #0d47a1;
-                color: white;
-                padding: 4px 12px;
-                border-radius: 3px;
-                font-weight: bold;
-                font-size: 13px;
-            }
-        """)
-        header_layout.addWidget(level_badge)
-
-        width = level_data.get('width', 0)
-        height = level_data.get('height', 0)
-        dim_label = QLabel(f"{width} x {height}")
-        dim_label.setStyleSheet("font-size: 16px; font-weight: bold; color: #4a9eff;")
-        header_layout.addWidget(dim_label)
-
-        # Main texture indicator
-        if level_num == 0:
-            main_badge = QLabel("Main Texture")
-            main_badge.setStyleSheet("color: #4caf50; font-size: 12px;")
-            header_layout.addWidget(main_badge)
-
-        header_layout.addStretch()
-        layout.addLayout(header_layout)
-
-        # Stats grid
-        stats_grid = self._create_stats_grid(level_data)
-        layout.addWidget(stats_grid)
-
-        return info_widget
-
-
-    def _create_stats_grid(self, level_data): #vers 1
-        """Create stats grid"""
-        grid_widget = QWidget()
-        grid_layout = QHBoxLayout(grid_widget)
-        grid_layout.setContentsMargins(0, 0, 0, 0)
-        grid_layout.setSpacing(8)
-
-        fmt = level_data.get('format', self.texture_data.get('format', 'Unknown'))
-        size = level_data.get('compressed_size', 0)
-        size_kb = size / 1024
-
-        # Format stat
-        format_stat = self._create_stat_box("Format:", fmt)
-        grid_layout.addWidget(format_stat)
-
-        # Size stat
-        size_stat = self._create_stat_box("Size:", f"{size_kb:.1f} KB")
-        grid_layout.addWidget(size_stat)
-
-        # Compression stat
-        if 'DXT' in fmt:
-            ratio = "4:1" if 'DXT5' in fmt or 'DXT3' in fmt else "6:1"
-            comp_stat = self._create_stat_box("Compression:", ratio)
-        else:
-            comp_stat = self._create_stat_box("Compression:", "None")
-        grid_layout.addWidget(comp_stat)
-
-        # Status stat
-        is_modified = level_data.get('level', 0) in self.modified_levels
-        status_text = "⚠ Modified" if is_modified else "✓ Valid"
-        status_color = "#ff9800" if is_modified else "#4caf50"
-        status_stat = self._create_stat_box("Status:", status_text, status_color)
-        grid_layout.addWidget(status_stat)
-
-        return grid_widget
-
-
-    def _create_stat_box(self, label, value, value_color="#e0e0e0"): #vers 1
-        """Create individual stat box"""
-        stat = QFrame()
-        stat.setStyleSheet("""
-            QFrame {
-                background: #252525;
-                border-radius: 3px;
-                padding: 6px 10px;
-            }
-        """)
-
-        layout = QHBoxLayout(stat)
-        layout.setContentsMargins(8, 4, 8, 4)
-
-        label_widget = QLabel(label)
-        label_widget.setStyleSheet("color: #888; font-size: 12px;")
-        layout.addWidget(label_widget)
-
-        value_widget = QLabel(value)
-        value_widget.setStyleSheet(f"color: {value_color}; font-weight: bold; font-size: 12px;")
-        layout.addWidget(value_widget)
-
-        return stat
-
-
-    def _create_action_section(self, level_data): #vers 1
-        """Create action buttons section"""
-        action_widget = QWidget()
-        layout = QVBoxLayout(action_widget)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(5)
-
-        level_num = level_data.get('level', 0)
-
-        # Export button
-        export_btn = QPushButton("Export")
-        export_btn.setStyleSheet("""
-            QPushButton {
-                background: #2e5d2e;
-                border: 1px solid #3d7d3d;
-                color: white;
-                padding: 6px 12px;
-                border-radius: 3px;
-                font-size: 11px;
-            }
-            QPushButton:hover {
-                background: #3d7d3d;
-            }
-        """)
-        export_btn.clicked.connect(lambda: self._export_level(level_num))
-        layout.addWidget(export_btn)
-
-        # Import button
-        import_btn = QPushButton("Import")
-        import_btn.setStyleSheet("""
-            QPushButton {
-                background: #5d3d2e;
-                border: 1px solid #7d4d3d;
-                color: white;
-                padding: 6px 12px;
-                border-radius: 3px;
-                font-size: 11px;
-            }
-            QPushButton:hover {
-                background: #7d4d3d;
-            }
-        """)
-        import_btn.clicked.connect(lambda: self._import_level(level_num))
-        layout.addWidget(import_btn)
-
-        # Delete button (not for level 0) or Edit button (for level 0)
-        if level_num == 0:
-            edit_btn = QPushButton("Edit")
-            edit_btn.setStyleSheet("""
-                QPushButton {
-                    background: #3a3a3a;
-                    border: 1px solid #4a4a4a;
-                    color: white;
-                    padding: 6px 12px;
-                    border-radius: 3px;
-                    font-size: 11px;
-                }
-                QPushButton:hover {
-                    background: #4a4a4a;
-                }
-            """)
-            edit_btn.clicked.connect(self._edit_main_texture)
-            layout.addWidget(edit_btn)
-        else:
-            delete_btn = QPushButton("Delete")
-            delete_btn.setStyleSheet("""
-                QPushButton {
-                    background: #5d2e2e;
-                    border: 1px solid #7d3d3d;
-                    color: white;
-                    padding: 6px 12px;
-                    border-radius: 3px;
-                    font-size: 11px;
-                }
-                QPushButton:hover {
-                    background: #7d3d3d;
-                }
-            """)
-            delete_btn.clicked.connect(lambda: self._delete_level(level_num))
-            layout.addWidget(delete_btn)
-
-        return action_widget
 
 
     def _apply_title_font(self): #vers 1
@@ -2900,7 +2622,6 @@ class MainGUI(QWidget): #vers 3
         locale_text = self.settings_locale_combo.currentText()
 
 
-
     def _refresh_main_window(self): #vers 1
         """Refresh the main window to show changes"""
         try:
@@ -2919,7 +2640,6 @@ class MainGUI(QWidget): #vers 3
 
 
 #------ Tabbing Functions
-
 
     def _load_settings(self): #vers 1
         """Load settings from config file"""
@@ -3035,7 +2755,7 @@ class MainGUI(QWidget): #vers 3
         self.hotkey_close = QShortcut(QKeySequence.StandardKey.Close, self)
         self.hotkey_close.activated.connect(self.close)
 
-        # === EDIT OPERATIONS ===
+        # === EDIT OPERATIONS === TODO - Make hotkeys define functions
 
         # Undo (Ctrl+Z)
         self.hotkey_undo = QShortcut(QKeySequence.StandardKey.Undo, self)
@@ -3140,6 +2860,7 @@ class MainGUI(QWidget): #vers 3
             self.hotkey_settings.activated.connect(self.show_settings_dialog)
         elif hasattr(self, '_show_settings_hotkeys'):
             self.hotkey_settings.activated.connect(self._show_settings_hotkeys)
+
 
         # === NAVIGATION ===
 
@@ -3386,10 +3107,6 @@ class MainGUI(QWidget): #vers 3
         dialog.exec()
 
 
-#class SvgIcons: #vers 1 - Once functions are updated this class will be moved to the bottom
-    """SVG icon data to QIcon with theme color support"""
-
-
     def _create_bitdepth_icon(self): #vers 3
         """Create bit depth icon"""
         svg_data = b'''<svg viewBox="0 0 24 24">
@@ -3422,43 +3139,6 @@ class MainGUI(QWidget): #vers 3
         """Resize grip icon - diagonal arrows"""
         svg_data = b'''<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14 6l-8 8M10 6h4v4M6 14v-4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>'''
-        return self._svg_to_icon(svg_data, size=20)
-
-
-    def _create_upscale_icon(self): #vers 3
-        """Create AI upscale icon - brain/intelligence style"""
-        svg_data = b'''<svg viewBox="0 0 24 24">
-            <!-- Brain outline -->
-            <path d="M12 3 C8 3 5 6 5 9 C5 10 5.5 11 6 12 C5.5 13 5 14 5 15 C5 18 8 21 12 21 C16 21 19 18 19 15 C19 14 18.5 13 18 12 C18.5 11 19 10 19 9 C19 6 16 3 12 3 Z"
-                fill="none" stroke="currentColor" stroke-width="1.5"/>
-
-            <!-- Neural pathways inside -->
-            <path d="M9 8 L10 10 M14 8 L13 10 M10 12 L14 12 M9 14 L12 16 M15 14 L12 16"
-                stroke="currentColor" stroke-width="1" fill="none"/>
-
-            <!-- Upward indicator -->
-            <path d="M19 8 L19 4 M17 6 L19 4 L21 6"
-                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </svg>'''
-        return self._svg_to_icon(svg_data, size=20)
-
-
-    def _create_upscale_icon(self): #vers 3
-        """Create AI upscale icon - sparkle/magic AI style"""
-        svg_data = b'''<svg viewBox="0 0 24 24">
-            <!-- Large sparkle -->
-            <path d="M12 2 L13 8 L12 14 L11 8 Z M8 12 L2 11 L8 10 L14 11 Z"
-                fill="currentColor"/>
-
-            <!-- Small sparkles -->
-            <circle cx="18" cy="6" r="1.5" fill="currentColor"/>
-            <circle cx="6" cy="18" r="1.5" fill="currentColor"/>
-            <circle cx="19" cy="16" r="1" fill="currentColor"/>
-
-            <!-- Upward arrow -->
-            <path d="M16 20 L20 20 M18 18 L18 22"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>'''
         return self._svg_to_icon(svg_data, size=20)
 
@@ -4067,186 +3747,6 @@ class MainGUI(QWidget): #vers 3
 
 
 # Footer functions
-
-def _rgb_to_565(r, g, b):
-    return ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3)
-
-
-def _565_to_rgb(c):
-    r = ((c >> 11) & 0x1F) << 3
-    g = ((c >> 5) & 0x3F) << 2
-    b = (c & 0x1F) << 3
-    return r, g, b
-
-
-def _best_color_index(palette, r, g, b):
-    best = 0
-    best_dist = None
-    for i, (pr, pg, pb) in enumerate(palette):
-        dr = pr - r
-        dg = pg - g
-        db = pb - b
-        dist = dr*dr + dg*dg + db*db
-        if best_dist is None or dist < best_dist:
-            best_dist = dist
-            best = i
-    return best
-
-
-def _encode_dxt1(rgba_bytes, width, height):
-    """Encode raw RGBA bytes (RGBA8888) into DXT1 bytes.
-    Simple block-wise encoder: select endpoints by luminance heuristic and assign indices.
-    """
-    blocks_x = (width + 3) // 4
-    blocks_y = (height + 3) // 4
-    out = bytearray()
-
-    for by in range(blocks_y):
-        for bx in range(blocks_x):
-            pixels = []
-            for py in range(4):
-                for px in range(4):
-                    x = bx*4 + px
-                    y = by*4 + py
-                    if x < width and y < height:
-                        idx = (y*width + x)*4
-                        r = rgba_bytes[idx]
-                        g = rgba_bytes[idx+1]
-                        b = rgba_bytes[idx+2]
-                    else:
-                        r = g = b = 0
-                    pixels.append((r,g,b))
-
-            lum = [0.2126*p[0] + 0.7152*p[1] + 0.0722*p[2] for p in pixels]
-            max_i = lum.index(max(lum))
-            min_i = lum.index(min(lum))
-            c0_rgb = pixels[max_i]
-            c1_rgb = pixels[min_i]
-
-            c0_565 = _rgb_to_565(*c0_rgb)
-            c1_565 = _rgb_to_565(*c1_rgb)
-
-            pr0 = _565_to_rgb(c0_565)
-            pr1 = _565_to_rgb(c1_565)
-            palette = [pr0, pr1]
-            if c0_565 > c1_565:
-                palette.append(((2*pr0[0]+pr1[0])//3, (2*pr0[1]+pr1[1])//3, (2*pr0[2]+pr1[2])//3))
-                palette.append(((pr0[0]+2*pr1[0])//3, (pr0[1]+2*pr1[1])//3, (pr0[2]+2*pr1[2])//3))
-            else:
-                palette.append(((pr0[0]+pr1[0])//2, (pr0[1]+pr1[1])//2, (pr0[2]+pr1[2])//2))
-                palette.append((0,0,0))
-
-            indices = 0
-            bit_pos = 0
-            for (r,g,b) in pixels:
-                idx = _best_color_index(palette, r, g, b)
-                indices |= (idx & 0x3) << bit_pos
-                bit_pos += 2
-
-            out.extend(struct.pack('<HHI', c0_565, c1_565, indices))
-
-    return bytes(out)
-
-
-def _encode_alpha_block(alpha_bytes):
-    """Encode 4x4 alpha block for DXT5.
-    alpha_bytes: list of 16 alpha values (0-255)
-    Returns 8 bytes: a0, a1, and 48-bit index stream (little-endian packed 3 bits per pixel)
-    """
-    a0 = max(alpha_bytes)
-    a1 = min(alpha_bytes)
-
-    # Build alpha palette
-    alpha_palette = [a0, a1]
-    if a0 > a1:
-        for i in range(1, 6):
-            alpha_palette.append((( (6 - i) * a0 + i * a1 ) // 6))
-    else:
-        for i in range(1, 4):
-            alpha_palette.append((( (4 - i) * a0 + i * a1 ) // 4))
-        alpha_palette.extend([0, 255])
-
-    # For each pixel, find best index (0..7)
-    indices = 0
-    bit_pos = 0
-    for a in alpha_bytes:
-        # find closest
-        best_i = 0
-        best_dist = None
-        for i, av in enumerate(alpha_palette):
-            dist = (av - a) * (av - a)
-            if best_dist is None or dist < best_dist:
-                best_dist = dist
-                best_i = i
-        indices |= (best_i & 0x7) << bit_pos
-        bit_pos += 3
-
-    # pack into 6 bytes little endian
-    idx_bytes = indices.to_bytes(6, 'little')
-    return bytes([a0, a1]) + idx_bytes
-
-
-def _encode_dxt5(rgba_bytes, width, height):
-    """Encode raw RGBA8888 bytes into DXT5 bytes.
-    DXT5 block = 8 bytes alpha block + 8 bytes color block (same as DXT1 color block)
-    """
-    blocks_x = (width + 3) // 4
-    blocks_y = (height + 3) // 4
-    out = bytearray()
-
-    for by in range(blocks_y):
-        for bx in range(blocks_x):
-            alpha_vals = []
-            pixels_rgb = []
-            for py in range(4):
-                for px in range(4):
-                    x = bx*4 + px
-                    y = by*4 + py
-                    if x < width and y < height:
-                        idx = (y*width + x)*4
-                        r = rgba_bytes[idx]
-                        g = rgba_bytes[idx+1]
-                        b = rgba_bytes[idx+2]
-                        a = rgba_bytes[idx+3]
-                    else:
-                        r = g = b = a = 0
-                    pixels_rgb.append((r,g,b))
-                    alpha_vals.append(a)
-
-            # alpha block
-            alpha_block = _encode_alpha_block(alpha_vals)
-
-            # color block same as DXT1
-            lum = [0.2126*p[0] + 0.7152*p[1] + 0.0722*p[2] for p in pixels_rgb]
-            max_i = lum.index(max(lum))
-            min_i = lum.index(min(lum))
-            c0_rgb = pixels_rgb[max_i]
-            c1_rgb = pixels_rgb[min_i]
-            c0_565 = _rgb_to_565(*c0_rgb)
-            c1_565 = _rgb_to_565(*c1_rgb)
-            pr0 = _565_to_rgb(c0_565)
-            pr1 = _565_to_rgb(c1_565)
-            palette = [pr0, pr1]
-            if c0_565 > c1_565:
-                palette.append(((2*pr0[0]+pr1[0])//3, (2*pr0[1]+pr1[1])//3, (2*pr0[2]+pr1[2])//3))
-                palette.append(((pr0[0]+2*pr1[0])//3, (pr0[1]+2*pr1[1])//3, (pr0[2]+2*pr1[2])//3))
-            else:
-                palette.append(((pr0[0]+pr1[0])//2, (pr0[1]+pr1[1])//2, (pr0[2]+pr1[2])//2))
-                palette.append((0,0,0))
-
-            indices = 0
-            bit_pos = 0
-            for (r,g,b) in pixels_rgb:
-                idx = _best_color_index(palette, r, g, b)
-                indices |= (idx & 0x3) << bit_pos
-                bit_pos += 2
-
-            color_bytes = struct.pack('<HHI', c0_565, c1_565, indices)
-
-            out.extend(alpha_block)
-            out.extend(color_bytes)
-
-    return bytes(out)
 
 # --- External AI upscaler integration helper ---
 import subprocess
