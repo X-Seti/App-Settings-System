@@ -1,5 +1,5 @@
-# App Settings System - Feb 2025 - X-Seti
-# updated - Oct 25 - Added the complete color set to QT6
+# App Settings System — X-Seti
+<!-- Updated: March 2026 —  Colors tab layout fixes, QSplitter resize, Oct 2025 colour set -->
 
 A reusable theming and settings system for PyQt6 applications.
 
@@ -15,6 +15,17 @@ A reusable theming and settings system for PyQt6 applications.
 - **Settings Dialog**: User-friendly interface for managing themes
 - **Persistent Storage**: Themes saved as JSON files
 - **Reusable**: Works with multiple applications
+
+
+
+## Recent Changes
+
+### March 2026 — Colors Tab Layout Fix
+- Colour list now stretches correctly when the Settings window is resized
+- Left/right panels separated by a draggable `QSplitter`
+- Fixed `QHBoxLayout(self)` bug that corrupted the dialog layout
+
+See [CHANGELOG.md](CHANGELOG.md) for full history.
 
 ## Integration
 
