@@ -1,52 +1,52 @@
 {
-  "name": "Amiga MUI (Magic User Interface)",
-  "description": "Amiga MUI inspired theme with gradients",
-  "category": "Computer Classics",
+  "name": "IMG Factory Dark",
+  "description": "Dark professional theme for IMG Factory",
+  "category": "Professional",
   "author": "X-Seti",
   "version": "1.0",
   "colors": {
-    "bg_primary": "#e8e8e8",
-    "bg_secondary": "#d8d8d8",
-    "bg_tertiary": "#c8c8c8",
-    "panel_bg": "#f0f0f0",
-    "accent_primary": "#0080ff",
-    "accent_secondary": "#0060cc",
-    "text_primary": "#000000",
-    "text_secondary": "#444444",
-    "text_accent": "#0080ff",
-    "button_normal": "#e0e0e0",
-    "button_hover": "#f0f0f0",
-    "button_pressed": "#d0d0d0",
-    "border": "#999999",
-    "success": "#00aa00",
-    "warning": "#ff8800",
-    "error": "#dd0000",
-    "grid": "#cccccc",
-    "pin_default": "#777777",
-    "pin_highlight": "#0080ff",
-    "action_import": "#4da6ff",
-    "action_export": "#52c41a",
-    "action_remove": "#ff4d4f",
-    "action_update": "#fa8c16",
-    "action_convert": "#b37feb",
-    "panel_entries": "#f5f5f5",
-    "panel_filter": "#fffbe6",
-    "toolbar_bg": "#eeeeee",
-    "button_text_color": "#000000",
-    "button_text_hover": "#000000",
-    "button_text_pressed": "#000000",
-    "splitter_color_background": "#c2c2c2",
-    "splitter_color_shine": "#dbdbdb",
-    "splitter_color_shadow": "#acacac",
-    "scrollbar_background": "#dcdcdc",
-    "scrollbar_handle": "#898989",
-    "scrollbar_handle_hover": "#7a7a7a",
-    "scrollbar_handle_pressed": "#6b6b6b",
-    "scrollbar_border": "#999999",
-    "selection_background": "#0080ff",
+    "bg_primary": "#272727",
+    "bg_secondary": "#242424",
+    "bg_tertiary": "#2e2e2e",
+    "panel_bg": "#333333",
+    "accent_primary": "#1976d2",
+    "accent_secondary": "#1565c0",
+    "text_primary": "#ffffff",
+    "text_secondary": "#ebebeb",
+    "text_accent": "#cccccc",
+    "button_normal": "#3a3a3a",
+    "button_hover": "#4a4a4a",
+    "button_pressed": "#5a0101",
+    "border": "#313131",
+    "success": "#53aa50",
+    "warning": "#fb8804",
+    "error": "#ef3939",
+    "grid": "#292929",
+    "pin_default": "#858585",
+    "pin_highlight": "#21a2ed",
+    "action_import": "#21a2ed",
+    "action_export": "#53aa50",
+    "action_remove": "#ef3939",
+    "action_update": "#fb8804",
+    "action_convert": "#912caa",
+    "panel_entries": "#30462f",
+    "panel_filter": "#463b2f",
+    "toolbar_bg": "#292929",
+    "button_text_color": "#ffffff",
+    "button_text_hover": "#ffffff",
+    "button_text_pressed": "#ffffff",
+    "splitter_color_background": "#404040",
+    "splitter_color_shine": "#4c4c4c",
+    "splitter_color_shadow": "#242424",
+    "scrollbar_background": "#292929",
+    "scrollbar_handle": "#525252",
+    "scrollbar_handle_hover": "#666666",
+    "scrollbar_handle_pressed": "#737373",
+    "scrollbar_border": "#404040",
+    "selection_background": "#550000",
     "selection_text": "#ffffff",
-    "table_row_even": "#e8e8e8",
-    "table_row_odd": "#e8e8e8",
+    "table_row_even": "#1f1f1f",
+    "table_row_odd": "#333333",
     "panel_margins": "5",
     "panel_spacing": "2",
     "button_min_height": "30",
@@ -93,18 +93,18 @@
     "col_version": "Version",
     "col_compression": "Compression",
     "col_status": "Status",
-    "alternate_row": "#e8e8e8",
-    "panel_fill_a": "#e8e8e8",
-    "panel_fill_b": "#d8d8d8",
-    "hero_gradient_dark_start": "#0080ff",
-    "hero_gradient_dark_end": "#0080ff",
-    "hero_gradient_light_start": "#0080ff",
-    "hero_gradient_light_end": "#0080ff",
-    "panel_grad_stop1": "#e8e8e8",
-    "panel_grad_stop2": "#0062c4",
-    "panel_grad_stop3": "#d8d8d8",
-    "panel_pattern_light": "#ffffff",
-    "panel_pattern_dark": "#b2b2b2",
+    "alternate_row": "#2b2b2b",
+    "panel_fill_a": "#272727",
+    "panel_fill_b": "#242424",
+    "hero_gradient_dark_start": "#272727",
+    "hero_gradient_dark_end": "#3e3e3e",
+    "hero_gradient_light_start": "#272727",
+    "hero_gradient_light_end": "#4e4e4e",
+    "panel_grad_stop1": "#272727",
+    "panel_grad_stop2": "#135aa1",
+    "panel_grad_stop3": "#242424",
+    "panel_pattern_light": "#363636",
+    "panel_pattern_dark": "#1e1e1e",
     "copper_light": "#b87333",
     "copper_dark": "#7a4a1a",
     "hero_bg": "",
@@ -118,7 +118,7 @@
     "tooltip_text": "#ffffff",
     "placeholder_text": "#aaaaaa",
     "disabled_text": "#777777",
-    "panel_primary": "#e4e4e4"
+    "panel_primary": "#454545"
   },
   "menus": {
     "menu_structure": [
@@ -182,6 +182,11 @@
           "text": "Save Entry...",
           "icon": "document-save-entry",
           "action": "save_img_entry"
+        },
+        {
+          "text": "Rebuild As...",
+          "icon": "document-save-as",
+          "action": "rebuild_img_as"
         },
         {
           "separator": true
@@ -270,55 +275,55 @@
         "text": "Open",
         "action": "open",
         "icon": "document-open",
-        "color": "#E3F2FD"
+        "color": "#1a3a52"
       },
       {
         "text": "Close",
         "action": "close",
         "icon": "window-close",
-        "color": "#FFF3E0"
+        "color": "#4a3d2d"
       },
       {
         "text": "Close All",
         "action": "close_all",
         "icon": "edit-clear",
-        "color": "#FFF3E0"
+        "color": "#4a3d2d"
       },
       {
         "text": "Rebuild",
         "action": "rebuild",
         "icon": "view-refresh",
-        "color": "#E8F5E8"
+        "color": "#2d4a2d"
       },
       {
         "text": "Save Entry...",
         "icon": "document-save-entry",
         "action": "save_img_entry",
-        "color": "#E8F5E8"
+        "color": "#2d4a2d"
       },
       {
         "text": "Rebuild All",
         "action": "rebuild_all",
         "icon": "document-save",
-        "color": "#E8F5E8"
+        "color": "#2d4a2d"
       },
       {
         "text": "Merge",
         "action": "merge",
         "icon": "document-merge",
-        "color": "#F3E5F5"
+        "color": "#3d2d4a"
       },
       {
         "text": "Split",
         "action": "split",
         "icon": "edit-cut",
-        "color": "#F3E5F5"
+        "color": "#3d2d4a"
       },
       {
         "text": "Convert",
         "action": "convert",
         "icon": "transform",
-        "color": "#FFF8E1"
+        "color": "#4a4a2d"
       }
     ],
     "file_entries": [
@@ -326,55 +331,55 @@
         "text": "Import",
         "action": "import",
         "icon": "document-import",
-        "color": "#E1F5FE"
+        "color": "#1a3a52"
       },
       {
         "text": "Import via",
         "action": "import_via",
         "icon": "document-import",
-        "color": "#E1F5FE"
+        "color": "#1a3a52"
       },
       {
         "text": "Export",
         "action": "export",
         "icon": "document-export",
-        "color": "#E0F2F1"
+        "color": "#1a4a44"
       },
       {
         "text": "Export via",
         "action": "export_via",
         "icon": "document-export",
-        "color": "#E0F2F1"
+        "color": "#1a4a44"
       },
       {
         "text": "Remove",
         "action": "remove",
         "icon": "edit-delete",
-        "color": "#FFEBEE"
+        "color": "#4a2d2d"
       },
       {
         "text": "Remove All",
         "action": "remove_all",
         "icon": "edit-clear",
-        "color": "#FFEBEE"
+        "color": "#4a2d2d"
       },
       {
         "text": "Refresh",
         "action": "update",
         "icon": "view-refresh",
-        "color": "#F9FBE7"
+        "color": "#4a4a2d"
       },
       {
         "text": "Quick Export",
         "action": "quick_export",
         "icon": "document-export",
-        "color": "#E0F2F1"
+        "color": "#1a4a44"
       },
       {
         "text": "Pin selected",
         "action": "pin",
         "icon": "view-pin",
-        "color": "#FCE4EC"
+        "color": "#4a2d3d"
       }
     ],
     "editing_options": [
@@ -382,79 +387,79 @@
         "text": "Col Edit",
         "action": "col_edit",
         "icon": "edit-col",
-        "color": "#FFE0B2"
+        "color": "#4a3d2d"
       },
       {
         "text": "Txd Edit",
         "action": "txd_edit",
         "icon": "edit-txd",
-        "color": "#E8EAF6"
+        "color": "#2d2d4a"
       },
       {
         "text": "Dff Edit",
         "action": "dff_edit",
         "icon": "edit-dff",
-        "color": "#F1F8E9"
+        "color": "#3a4a2d"
       },
       {
         "text": "Ipf Edit",
         "action": "ipf_edit",
         "icon": "edit-ipf",
-        "color": "#FFF3E0"
+        "color": "#4a4a2d"
       },
       {
         "text": "IPL Edit",
         "action": "ipl_edit",
         "icon": "edit-ipl",
-        "color": "#FFEBEE"
+        "color": "#4a2d2d"
       },
       {
         "text": "IDE Edit",
         "action": "ide_edit",
         "icon": "edit-ide",
-        "color": "#E0F2F1"
+        "color": "#1a4a44"
       },
       {
         "text": "Dat Edit",
         "action": "dat_edit",
         "icon": "dat-editor",
-        "color": "#F3E5F5"
+        "color": "#3d2d4a"
       },
       {
         "text": "Zons Edit",
         "action": "zons_edit",
         "icon": "zon-editor",
-        "color": "#E1F5FE"
+        "color": "#1a3a52"
       },
       {
         "text": "Weap Edit",
         "action": "weap_edit",
         "icon": "weap-editor",
-        "color": "#FFF8E1"
+        "color": "#4a4a2d"
       },
       {
         "text": "Vehi Edit",
         "action": "vehi_edit",
         "icon": "vehi-editor",
-        "color": "#E8F5E8"
+        "color": "#2d4a2d"
       },
       {
         "text": "Radar Map",
         "action": "radar_map",
         "icon": "radar-map",
-        "color": "#FCE4EC"
+        "color": "#4a2d3d"
       },
       {
         "text": "Paths Map",
         "action": "paths_map",
         "icon": "paths-map",
-        "color": "#F9FBE7"
+        "color": "#4a4a2d"
       },
       {
         "text": "Waterpro",
         "action": "waterpro",
         "icon": "waterpro",
-        "color": "#E3F2FD"
+        "color": "#1a3a52"
       }
     ]
   },
@@ -500,7 +505,7 @@
     "splitter_handle_width": 8,
     "splitter_border_radius": 3,
     "splitter_show_grip": true,
-    "panel_opacity": 95,
+    "panel_opacity": 100,
     "enable_animations": true
   },
   "hero_gradient_dark_start": "#1a1a2e",
