@@ -7,6 +7,8 @@ App Factory - App Settings System - Clean Version
 Settings management without demo code
 """
 
+
+
 import json
 import os
 from pathlib import Path
@@ -50,6 +52,8 @@ except ImportError:
 # _get_default_button_colors (vers 1)
 # _on_button_color_changed (vers 1)
 # _collect_current_button_colors (vers 1)
+
+# TODO: this needs to show all def methods in the first indent, not embeded def methods
 
 App_name = "Global App System Settings"
 
