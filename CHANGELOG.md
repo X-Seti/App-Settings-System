@@ -2,6 +2,13 @@
 
 ---
 
+## October 2026 - Sync with IMG Factory 1.6
+- app_settings_system.py, SVG icons, 41 themes synced from IMG Factory 1.6.
+- New: per-colour transparency, window-wide panel image, theme effects saved with themes.
+- New: Windows exe build (compiled bootloader), app_settings_system.spec.
+
+---
+
 ## April 2026 — Major overhaul (Builds 337–345)
 
 ### Renamed: Global App System Settings

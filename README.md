@@ -1,5 +1,5 @@
 # Global App System Settings
-<!-- Updated: April 2026 — Major overhaul: Panels tab, Buttons v2, Localisation, Progress Bars, SVG icons depends, panel effects engine -->
+<!-- Updated: October 2026 - per-colour transparency, panel image across window, settings layout rework, Windows exe -->
 
 A reusable theming, settings and panel effects system for PyQt6 applications.
 Used by IMG Factory 1.6, COL Workshop, TXD Workshop, Model Workshop, DP5 Workshop and more.
@@ -15,10 +15,12 @@ theme creation, saving, loading, applying, panel fill/gradient/pattern effects, 
 
 ## Features
 
-- **Theme Management** — create, save, load, delete custom themes; 37 bundled themes
+- **Theme Management** — create, save, load, delete custom themes; 41 bundled themes
 - **Colour Customisation** — full colour editor with live preview and XP-style picker
 - **Button Styles** — 11 styles: Flat, Gradient H/V/45°, Banded (Win ME), Zen, Indented, Bump, Amiga WB, Half-shine, Shadow-dark
-- **Panel Effects** — fill (solid/two-tone), gradient (6 directions, 3 stops), pattern (9 styles), image background, transparency — applied live via `AppPanelEffect`
+- **Panel Effects** — fill (solid/two-tone), gradient (6 directions, 3 stops), pattern (9 styles), image background (per panel or across the whole window), transparency — applied live via `AppPanelEffect`
+- **Per-colour Transparency** — alpha column in the Colors tab (0-100) for backgrounds, panels, ribbons, buttons, title/menu/gadget bars, table rows, scrollbars, dialogs
+- **Theme Effects** — panel image (copied to `images/`) and transparency saved and loaded with each theme JSON
 - **Progress Bar Styles** — 8 styles with colour pickers and height control
 - **Hero Banner** — configurable dark/light gradient for welcome screens
 - **Localisation** — auto-detect, 12 language stubs, date/number format, per-app overrides
@@ -33,16 +35,26 @@ theme creation, saving, loading, applying, panel fill/gradient/pattern effects, 
 ## File Structure
 
 ```
-your_project/
-├── utils/
-│   ├── app_settings_system.py          # Main settings system
-│   └── depends/
-│       ├── __init__.py
-│       └── App_System_Setting_Svg_icons.py  # SVG icon provider
-├── themes/
-│   └── *.json                          # 37 bundled themes
-└── your_main_app.py
+App-Settings-System/
+├── launch_settings.py                  # Standalone launcher
+├── app_settings_system.spec            # PyInstaller spec (Windows exe)
+├── appfactory.settings.json            # Default settings
+├── apps/
+│   ├── utils/app_settings_system.py    # Main settings system
+│   ├── methods/imgfactory_svg_icons.py # SVG icons (optional)
+│   └── themes/*.json                   # 41 bundled themes
+└── depends/App_System_Setting_Svg_icons.py
 ```
+
+---
+
+## Running
+
+```bash
+python3 launch_settings.py
+```
+
+Windows: download `App_Settings_System_Windows.zip` from the `windows-build` release, unzip, run `App_Settings_System.exe`. Built by GitHub Actions on every push to main.
 
 ---
 
@@ -51,14 +63,14 @@ your_project/
 ### 1. Set App Name
 
 ```python
-import utils.app_settings_system as settings_module
+import apps.utils.app_settings_system as settings_module
 settings_module.App_name = "My Application"
 ```
 
 ### 2. Import
 
 ```python
-from utils.app_settings_system import (
+from apps.utils.app_settings_system import (
     AppSettings, SettingsDialog, apply_theme_to_app,
     AppPanelEffect, apply_panel_effects
 )
@@ -104,15 +116,15 @@ btn.setIcon(self.icons.settings_icon())
 
 | Tab | Contents |
 |-----|----------|
-| **Colors** | XP-style colour picker, theme load/save/delete |
-| **Fonts** | Font family, size, weight per UI element |
-| **Buttons** | 11 button styles with live preview row, tint on/off, per-panel tint colours |
-| **Panels** | Fill / Gradient / Pattern / Image / Transparency / Gadgets — all with two-column live preview |
-| **Gadgets** | Amiga MUI-style gadget styling (string, gauge, scale, knob…) |
+| **Colors** | Colour picker, per-colour transparency column, theme load/save/delete, Apply Theme |
+| **Fonts** | One row per font: family, size, weight |
+| **Buttons** | Button style dropdown, live preview, tint on/off, per-panel tint grid |
+| **Panels** | Four panel previews; fill / gradient / pattern / image (per panel or across window) / opacity |
+| **Gadgets** | Amiga MUI-style gadgets; sliders, buttons, splitter width |
 | **Shadows** | Shadow depth and colour controls |
-| **UI Management** | Components (group, scrollbar, listview) + Progress Bar styles |
+| **UI Management** | Group, scrollbar, listview components; progress bar styles |
 | **Interface** | Toolbar, statusbar, menu visibility |
-| **Localisation** | Locale auto-detect, language selector, date/number format, per-app overrides |
+| **Localisation** | Locale auto-detect, language, date/number format, per-app overrides |
 | **Debug** | Debug mode, log level, category filters |
 
 ---
@@ -145,7 +157,7 @@ Available: `flat`, `gradient_h`, `gradient_v`, `gradient_45`, `banded`, `zen`, `
 
 ---
 
-## Bundled Themes (37)
+## Bundled Themes (41)
 
 Amiga MUI Light/Dark, Amiga WB Light, App Factory, Blue Panels Dark, Blue/Green/Lavender/Pastel/Peach/Pink/Red/Yellow Light, Classic Dark, Cyberpunk Dark, Default Green, Garujaro Dark, GTA Forums Light/Dark, GTA Liberty City/San Andreas/Vice City Dark, IMG Factory Light/Dark, Knight Rider Dark, Manjaro Dark, Matrix Dark, Professional Light, Red Dead Dark, Rockstar Dark, Synthwave Outrun Dark, System KDE, Tea and Toast Dark, Yellow Sunshine Light.
 
@@ -168,6 +180,7 @@ Amiga MUI Light/Dark, Amiga WB Light, App Factory, Blue Panels Dark, Blue/Green/
 - **DP5 Workshop** — Deluxe Paint 5 clone bitmap editor
 - **Radar Workshop** — GTA radar tile editor
 - **AI Workshop** — AI assistant integration
+- **Map, Timecyc, Paths, Vehicle, Zon, Water, Hex Workshops**, Model Viewer, RW CoreFramework
 
 ---
 

@@ -1,0 +1,77 @@
+# this belongs in root /.github/workflows/windows-build.yml - Version: 1
+# X-Seti - October01 2026 - App Settings System - Windows exe build (PyInstaller)
+name: Windows build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore: ['App_Settings_System.exe', '_internal/**']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Keep line endings as-is
+        run: git config --global core.autocrlf false
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyQt6
+
+      # Own bootloader (compiled here, not the stock prebuilt one) - stock
+      # PyInstaller bootloaders are what Defender's ML heuristics flag.
+      - name: PyInstaller with locally compiled bootloader
+        env:
+          PYINSTALLER_COMPILE_BOOTLOADER: "1"
+        run: pip install --no-binary pyinstaller --no-cache-dir pyinstaller
+
+      - name: Build exe
+        run: pyinstaller --noconfirm app_settings_system.spec
+
+      - name: Import check
+        run: |
+          $env:QT_QPA_PLATFORM = "offscreen"
+          python -c "import sys; sys.path.insert(0, '.'); from PyQt6.QtWidgets import QApplication; app = QApplication(sys.argv); from apps.utils.app_settings_system import AppSettings, SettingsDialog; d = SettingsDialog(AppSettings()); print('SettingsDialog OK')"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: App_Settings_System_Windows
+          path: dist/App_Settings_System
+
+      - name: Zip build
+        run: Compress-Archive -Path dist/App_Settings_System -DestinationPath App_Settings_System_Windows.zip
+
+      - name: Publish release windows-build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete windows-build --cleanup-tag -y 2>$null
+          $global:LASTEXITCODE = 0
+          gh release create windows-build App_Settings_System_Windows.zip --target $env:GITHUB_SHA --prerelease --title "App Settings System Windows build" --notes "Latest main build. Unzip and run App_Settings_System/App_Settings_System.exe."
+
+      - name: Commit exe to repo root
+        run: |
+          if (Test-Path _internal) { Remove-Item _internal -Recurse -Force }
+          Copy-Item dist/App_Settings_System/_internal _internal -Recurse
+          Copy-Item dist/App_Settings_System/App_Settings_System.exe . -Force
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A App_Settings_System.exe _internal
+          git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git commit -m "Windows exe build $($env:GITHUB_SHA.Substring(0,7)) [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          }
+          $global:LASTEXITCODE = 0
