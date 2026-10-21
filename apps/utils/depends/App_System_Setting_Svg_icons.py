@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# apps/utils/depends/App_System_Setting_Svg_icons.py - Version: 1
+#this belongs in apps/utils/depends/App_System_Setting_Svg_icons.py - Version: 2
 # X-Seti - Apr 2026 - Global App System Settings — SVG icon provider
 """
 IconProvider — theme-aware SVG icons for Global App System Settings.
@@ -11,29 +11,29 @@ Usage:
     btn.setIcon(self.icons.settings_icon())
 """
 
-##Methods list
+##Methods list -
 # IconProvider.__init__
 # IconProvider._get_icon_color
 # IconProvider._svg_to_icon
-# IconProvider.clear_cache
-# IconProvider.restore_icon
-# IconProvider.minimize_icon
-# IconProvider.maximize_icon
-# IconProvider.close_icon
-# IconProvider.folder_icon
-# IconProvider.save_icon
-# IconProvider.import_icon
-# IconProvider.export_icon
 # IconProvider.add_icon
+# IconProvider.clear_cache
+# IconProvider.close_icon
+# IconProvider.copy_icon
 # IconProvider.delete_icon
 # IconProvider.edit_icon
-# IconProvider.copy_icon
-# IconProvider.view_icon
-# IconProvider.settings_icon
-# IconProvider.info_icon
+# IconProvider.export_icon
 # IconProvider.filter_icon
-# IconProvider.undo_icon
+# IconProvider.folder_icon
+# IconProvider.import_icon
+# IconProvider.info_icon
+# IconProvider.maximize_icon
+# IconProvider.minimize_icon
 # IconProvider.refresh_icon
+# IconProvider.restore_icon
+# IconProvider.save_icon
+# IconProvider.settings_icon
+# IconProvider.undo_icon
+# IconProvider.view_icon
 
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtGui import QIcon
@@ -290,319 +290,3 @@ class IconProvider: #vers 2
                 stroke-linecap="round" fill="none"/>
         </svg>'''
         return self._svg_to_icon(svg_data, size=20)
-
-
-"""
-# In your main window __init__:
-from apps.utils.app_settings_system import IconProvider
-
-self.icons = IconProvider(self)
-
-# Then use icons like:
-open_btn.setIcon(self.icons.folder_icon())
-save_btn.setIcon(self.icons.save_icon())
-import_btn.setIcon(self.icons.import_icon())
-export_btn.setIcon(self.icons.export_icon())
-settings_btn.setIcon(self.icons.settings_icon())
-"""
-
-def rgb_to_hsl(hex_color): #vers 1
-    """Convert hex color to HSL"""
-    hex_color = hex_color.lstrip('#')
-    if len(hex_color) == 3:
-        hex_color = ''.join([c*2 for c in hex_color])
-
-    r, g, b = [int(hex_color[i:i+2], 16) / 255.0 for i in (0, 2, 4)]
-
-    max_c = max(r, g, b)
-    min_c = min(r, g, b)
-    l = (max_c + min_c) / 2.0
-
-    if max_c == min_c:
-        h = s = 0.0
-    else:
-        d = max_c - min_c
-        s = d / (2.0 - max_c - min_c) if l > 0.5 else d / (max_c + min_c)
-
-        if max_c == r:
-            h = (g - b) / d + (6 if g < b else 0)
-        elif max_c == g:
-            h = (b - r) / d + 2
-        else:
-            h = (r - g) / d + 4
-        h /= 6.0
-
-    return int(h * 360), int(s * 100), int(l * 100)
-
-
-def hsl_to_rgb(h, s, l): #vers 1
-    """Convert HSL to hex color"""
-    h = h / 360.0
-    s = s / 100.0
-    l = l / 100.0
-
-    def hue_to_rgb(p, q, t):
-        if t < 0:
-            t += 1
-        if t > 1:
-            t -= 1
-        if t < 1/6:
-            return p + (q - p) * 6 * t
-        if t < 1/2:
-            return q
-        if t < 2/3:
-            return p + (q - p) * (2/3 - t) * 6
-        return p
-
-    if s == 0:
-        r = g = b = l
-    else:
-        q = l * (1 + s) if l < 0.5 else l + s - l * s
-        p = 2 * l - q
-        r = hue_to_rgb(p, q, h + 1/3)
-        g = hue_to_rgb(p, q, h)
-        b = hue_to_rgb(p, q, h - 1/3)
-
-    return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
-
-
-def _create_debug_tab(self):
-    """Create debug settings tab"""
-    widget = QWidget()
-    layout = QVBoxLayout(widget)
-
-    # Debug Mode Group
-    debug_group = QGroupBox("🐛 Debug Mode")
-    debug_layout = QVBoxLayout(debug_group)
-
-    self.debug_enabled_check = QCheckBox("Enable debug mode")
-    self.debug_enabled_check.setChecked(self.app_settings.current_settings.get('debug_mode', False))
-    self.debug_enabled_check.setToolTip("Enable detailed debug logging throughout the application")
-    debug_layout.addWidget(self.debug_enabled_check)
-
-    # Debug Level
-    level_layout = QHBoxLayout()
-    level_layout.addWidget(QLabel("Debug Level:"))
-    self.debug_level_combo = QComboBox()
-    self.debug_level_combo.addItems(["ERROR", "WARNING", "INFO", "DEBUG", "VERBOSE"])
-    self.debug_level_combo.setCurrentText(self.app_settings.current_settings.get('debug_level', 'INFO'))
-    self.debug_level_combo.setToolTip("Set the verbosity level for debug output")
-    level_layout.addWidget(self.debug_level_combo)
-    level_layout.addStretch()
-    debug_layout.addLayout(level_layout)
-
-    layout.addWidget(debug_group)
-
-    # Debug Categories Group
-    categories_group = QGroupBox("Debug Categories")
-    categories_layout = QGridLayout(categories_group)
-
-    self.debug_categories = {}
-    default_categories = [
-        ('IMG_LOADING', 'IMG file loading and parsing'),
-        ('TABLE_POPULATION', 'Table display and entry population'),
-        ('BUTTON_ACTIONS', 'Button clicks and UI actions'),
-        ('FILE_OPERATIONS', 'File read/write operations'),
-        ('FILTERING', 'Table filtering and search'),
-        ('SIGNAL_SYSTEM', 'Unified signal system')
-    ]
-
-    enabled_categories = self.app_settings.current_settings.get('debug_categories', [cat[0] for cat in default_categories])
-
-    for i, (category, description) in enumerate(default_categories):
-        checkbox = QCheckBox(category.replace('_', ' ').title())
-        checkbox.setChecked(category in enabled_categories)
-        checkbox.setToolTip(description)
-        self.debug_categories[category] = checkbox
-
-        row = i // 2
-        col = i % 2
-        categories_layout.addWidget(checkbox, row, col)
-
-    layout.addWidget(categories_group)
-
-    # Debug Actions Group
-    actions_group = QGroupBox("Debug Actions")
-    actions_layout = QVBoxLayout(actions_group)
-
-    # Quick debug buttons
-    buttons_layout = QHBoxLayout()
-
-    test_debug_btn = QPushButton("Test Debug")
-    test_debug_btn.setToolTip("Send a test debug message")
-    test_debug_btn.clicked.connect(self._test_debug_output)
-    buttons_layout.addWidget(test_debug_btn)
-
-    debug_img_btn = QPushButton("Debug IMG")
-    debug_img_btn.setToolTip("Debug current IMG file (if loaded)")
-    debug_img_btn.clicked.connect(self._debug_current_img)
-    buttons_layout.addWidget(debug_img_btn)
-
-    clear_log_btn = QPushButton("Clear Log")
-    clear_log_btn.setToolTip("Clear the activity log")
-    clear_log_btn.clicked.connect(self._clear_debug_log)
-    buttons_layout.addWidget(clear_log_btn)
-
-    actions_layout.addLayout(buttons_layout)
-    layout.addWidget(actions_group)
-    layout.addStretch()
-
-    return widget
-
-def _test_debug_output(self):
-    """Test debug output"""
-    if hasattr(self.parent(), 'log_message'):
-        self.parent().log_message("Debug test message - debug system working!")
-        self.parent().log_message(f"[DEBUG-TEST] Debug enabled: {self.debug_enabled_check.isChecked()}")
-        self.parent().log_message(f"[DEBUG-TEST] Debug level: {self.debug_level_combo.currentText()}")
-
-        enabled_categories = [cat for cat, cb in self.debug_categories.items() if cb.isChecked()]
-        self.parent().log_message(f"[DEBUG-TEST] Active categories: {', '.join(enabled_categories)}")
-    else:
-        from PyQt6.QtWidgets import QMessageBox
-        QMessageBox.information(self, "Debug Test", "Debug test completed!\nCheck the activity log for output.")
-
-def _debug_current_img(self):
-    """Debug current IMG file"""
-    if hasattr(self.parent(), 'current_img') and self.parent().current_img:
-        img = self.parent().current_img
-        self.parent().log_message(f"[DEBUG-IMG] Current IMG: {img.file_path}")
-        self.parent().log_message(f"[DEBUG-IMG] Entries: {len(img.entries)}")
-
-        # Count file types
-        file_types = {}
-        for entry in img.entries:
-            ext = entry.name.split('.')[-1].upper() if '.' in entry.name else "NO_EXT"
-            file_types[ext] = file_types.get(ext, 0) + 1
-
-        self.parent().log_message(f"[DEBUG-IMG] File types found:")
-        for ext, count in sorted(file_types.items()):
-            self.parent().log_message(f"[DEBUG-IMG]   {ext}: {count} files")
-
-        # Check table rows
-        if hasattr(self.parent(), 'gui_layout') and hasattr(self.parent().gui_layout, 'table'):
-            table = self.parent().gui_layout.table
-            table_rows = table.rowCount()
-            hidden_rows = sum(1 for row in range(table_rows) if table.isRowHidden(row))
-            self.parent().log_message(f"[DEBUG-IMG] Table: {table_rows} rows, {hidden_rows} hidden")
-
-    elif hasattr(self.parent(), 'log_message'):
-        self.parent().log_message("[DEBUG-IMG] No IMG file currently loaded")
-    else:
-        from PyQt6.QtWidgets import QMessageBox
-        QMessageBox.information(self, "Debug IMG", "No IMG file loaded or no debug function available.")
-
-def _clear_debug_log(self):
-    """Clear the activity log"""
-    if hasattr(self.parent(), 'gui_layout') and hasattr(self.parent().gui_layout, 'log'):
-        self.parent().gui_layout.log.clear()
-        self.parent().log_message("Debug log cleared")
-    else:
-        from PyQt6.QtWidgets import QMessageBox
-        QMessageBox.information(self, "Clear Log", "Activity log cleared (if available).")
-
-def apply_theme_to_app(app, app_settings):
-    """Apply theme to entire application"""
-    stylesheet = app_settings.get_stylesheet()
-    app.setStyleSheet(stylesheet)
-
-
-def hsl_to_rgb(h, s, l): #vers 1
-    """Convert HSL to RGB and return hex color"""
-    h = h / 360.0
-    s = s / 100.0
-    l = l / 100.0
-
-    if s == 0:
-        r = g = b = l
-    else:
-        def hue_to_rgb(p, q, t):
-            if t < 0:
-                t += 1
-            if t > 1:
-                t -= 1
-            if t < 1/6:
-                return p + (q - p) * 6 * t
-            if t < 1/2:
-                return q
-            if t < 2/3:
-                return p + (q - p) * (2/3 - t) * 6
-            return p
-
-        q = l * (1 + s) if l < 0.5 else l + s - l * s
-        p = 2 * l - q
-
-        r = hue_to_rgb(p, q, h + 1/3)
-        g = hue_to_rgb(p, q, h)
-        b = hue_to_rgb(p, q, h - 1/3)
-
-    r = int(round(r * 255))
-    g = int(round(g * 255))
-    b = int(round(b * 255))
-
-    return f"#{r:02x}{g:02x}{b:02x}"
-
-def rgb_to_hsl(hex_color): #vers 1
-    """Convert hex color to HSL values"""
-    if hex_color.startswith('#'):
-        hex_color = hex_color[1:]
-
-    try:
-        r = int(hex_color[0:2], 16) / 255.0
-        g = int(hex_color[2:4], 16) / 255.0
-        b = int(hex_color[4:6], 16) / 255.0
-    except (ValueError, IndexError):
-        return 0, 0, 50  # Default values
-
-    max_val = max(r, g, b)
-    min_val = min(r, g, b)
-    diff = max_val - min_val
-
-    # Lightness
-    l = (max_val + min_val) / 2.0
-
-    if diff == 0:
-        h = s = 0  # achromatic
-    else:
-        # Saturation
-        s = diff / (2 - max_val - min_val) if l > 0.5 else diff / (max_val + min_val)
-
-        # Hue
-        if max_val == r:
-            h = (g - b) / diff + (6 if g < b else 0)
-        elif max_val == g:
-            h = (b - r) / diff + 2
-        elif max_val == b:
-            h = (r - g) / diff + 4
-        h /= 6
-
-    return int(h * 360), int(s * 100), int(l * 100)
-
-
-# Clean main function for testing only
-if __name__ == "__main__":
-    import sys
-    from PyQt6.QtWidgets import QApplication, QMainWindow
-
-    app = QApplication(sys.argv)
-
-    # Create settings
-    settings = AppSettings()
-
-    # Create simple test window
-    main_window = QMainWindow()
-    main_window.setWindowTitle("App Factory Settings Test")
-    main_window.setMinimumSize(400, 300)
-
-    # Apply theme
-    apply_theme_to_app(app, settings)
-
-    # Show settings dialog
-    dialog = SettingsDialog(settings, main_window)
-    if dialog.exec():
-        print("Settings applied")
-
-    sys.exit(0)
-
-    def _debug_current_img(self, *a, **kw): pass
-    def _test_debug_output(self, *a, **kw): pass

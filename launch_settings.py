@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-#this belongs in root /launch_settings.py - Version: 1
+#this belongs in root /launch_settings.py - Version: 2
 # X-Seti - April25 2026 - App Settings System - Root Launcher
 
+import os
 import sys
 from pathlib import Path
+
+if sys.platform.startswith('linux'):   # xcb: docks re-dock (Wayland cannot)
+    os.environ['QT_QPA_PLATFORM'] = 'xcb'
 
 root_dir = Path(__file__).parent.resolve()
 if str(root_dir) not in sys.path:
