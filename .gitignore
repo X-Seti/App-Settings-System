@@ -4,3 +4,4 @@ build/
 dist/
 /_internal/
 /*.exe
+.venv/

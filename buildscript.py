@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#this belongs in root /buildscript.py - Version: 2
+#this belongs in root /buildscript.py - Version: 3
 # X-Seti - October 26 2026 - App Settings System - build for this computer's platform
 
 """
@@ -11,6 +11,9 @@ Intel. GitHub Actions (.github/workflows/build.yml) runs it on each.
     python buildscript.py --ci       also compile PyInstaller's bootloader
     python buildscript.py --no-install
     python buildscript.py --name     print the app name
+
+Runs inside its own .venv (made on first run), so the system Python
+(PEP 668 / Arch, Debian, Fedora) is never changed.
 
 Output: dist/<APP>/ (folder build: the program plus its _internal/ files)
 and dist/<APP>_<Platform>_<arch>.zip (.tar.gz on Linux).
@@ -26,6 +29,7 @@ and dist/<APP>_<Platform>_<arch>.zip (.tar.gz on Linux).
 # _pyinstaller
 # _run
 # _smoke_test
+# _use_venv
 # main
 
 import os
@@ -176,10 +180,23 @@ def _package() -> str: #vers 1
     return shutil.make_archive(base, fmt, os.path.join(ROOT, 'dist'), name)
 
 
-def main(): #vers 1
+def _use_venv(): #vers 1
+    """Not in a virtual env: make ROOT/.venv (first run) and run this script again with its Python."""
+    if sys.prefix != sys.base_prefix:
+        return
+    venv = os.path.join(ROOT, '.venv')
+    py = os.path.join(venv, 'Scripts', 'python.exe') if sys.platform == 'win32' else os.path.join(venv, 'bin', 'python')
+    if not os.path.exists(py):
+        print('Creating', venv, flush=True)
+        _run([sys.executable, '-m', 'venv', venv])
+    sys.exit(subprocess.run([py, os.path.abspath(__file__)] + sys.argv[1:], cwd=ROOT).returncode)
+
+
+def main(): #vers 2
     if '--name' in sys.argv:
         print(CONFIG['name'])
         return
+    _use_venv()
     if '--no-install' not in sys.argv:
         _install('--ci' in sys.argv)
     _pyinstaller(_icon())
