@@ -2,6 +2,9 @@
 
 ---
 
+## Nov 02 2026 - Licence
+- LICENSE changed from GPL v3 to MIT, same as the other IMG Factory tools.
+
 ## October 2026 - Sync with IMG Factory 1.6
 - app_settings_system.py, SVG icons, 41 themes synced from IMG Factory 1.6.
 - New: per-colour transparency, window-wide panel image, theme effects saved with themes.

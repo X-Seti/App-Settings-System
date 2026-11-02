@@ -5,3 +5,6 @@ dist/
 /_internal/
 /*.exe
 .venv/
+/*_dist/
+/App_Settings_System
+/App_Settings_System.app/
